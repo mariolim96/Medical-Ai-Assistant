@@ -1,0 +1,8 @@
+README.md
+pom.xml
+src/main/java/com/medicalai/authservice/api/ApiUtil.java
+src/main/java/com/medicalai/authservice/api/AuthApi.java
+src/main/java/com/medicalai/authservice/model/AuthResponse.java
+src/main/java/com/medicalai/authservice/model/ErrorResponse.java
+src/main/java/com/medicalai/authservice/model/LoginRequest.java
+src/main/java/com/medicalai/authservice/model/RegisterRequest.java

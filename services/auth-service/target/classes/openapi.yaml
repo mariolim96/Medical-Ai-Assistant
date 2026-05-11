@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: AI Medical Assistant - Auth Service API
+  description: API per la registrazione e l'autenticazione JWT
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: Auth
+    description: Operazioni di autenticazione
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Registra un nuovo utente
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Utente registrato con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Dati non validi (es. email già esistente)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Autentica un utente e restituisce un token JWT
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login effettuato con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Credenziali non valide
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        role:
+          type: string
+          enum: [USER, ADMIN, DOCTOR]
+          default: USER
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Bearer JWT Token
+        expiresIn:
+          type: integer
+          format: int64
+          description: Scadenza in millisecondi
+        role:
+          type: string
+          description: Ruolo assegnato all'utente
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string

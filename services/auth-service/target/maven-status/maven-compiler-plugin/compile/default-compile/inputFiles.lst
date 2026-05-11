@@ -1,0 +1,14 @@
+/app/target/generated-sources/openapi/src/main/java/com/medicalai/authservice/api/AuthApi.java
+/app/src/main/java/com/medicalai/authservice/entity/User.java
+/app/src/main/java/com/medicalai/authservice/security/JwtService.java
+/app/target/generated-sources/openapi/src/main/java/com/medicalai/authservice/api/ApiUtil.java
+/app/target/generated-sources/openapi/src/main/java/com/medicalai/authservice/model/AuthResponse.java
+/app/src/main/java/com/medicalai/authservice/security/ApplicationConfig.java
+/app/src/main/java/com/medicalai/authservice/controller/AuthController.java
+/app/src/main/java/com/medicalai/authservice/repository/UserRepository.java
+/app/src/main/java/com/medicalai/authservice/AuthServiceApplication.java
+/app/src/main/java/com/medicalai/authservice/service/AuthService.java
+/app/src/main/java/com/medicalai/authservice/security/SecurityConfig.java
+/app/target/generated-sources/openapi/src/main/java/com/medicalai/authservice/model/LoginRequest.java
+/app/src/main/java/com/medicalai/authservice/security/JwtAuthenticationFilter.java
+/app/target/generated-sources/openapi/src/main/java/com/medicalai/authservice/model/RegisterRequest.java

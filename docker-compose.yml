@@ -108,11 +108,18 @@ services:
   # MICROSERVICES (PLACEHOLDERS)
   # ==========================================
 
-  # Auth Service (Spring Boot - Java 21)
+  # Auth Service (Spring Boot - Java 17)
   auth-service:
-    image: eclipse-temurin:21-jdk
+    image: maven:3.9.6-eclipse-temurin-17
     container_name: auth-service
-    command: tail -f /dev/null
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    volumes:
+      - ./services/auth-service:/app
+      - /app/target # Isola la cartella target dal computer host
+      - ~/.m2:/root/.m2 # Cache locale di Maven per velocizzare i riavvii
+    command: mvn spring-boot:run
     environment:
       - DB_HOST=postgres-main
       - DB_PORT=5432
