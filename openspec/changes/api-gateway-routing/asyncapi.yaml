@@ -1,0 +1,103 @@
+asyncapi: 3.0.0
+info:
+  title: API Gateway Service
+  version: 1.0.0
+  description: |
+    AsyncAPI contract for the API Gateway, derived from event discovery and design decisions.
+    Handles logging of routing events and security violations.
+
+defaultContentType: application/json
+
+servers:
+  production:
+    host: kafka:9092
+    protocol: kafka
+    description: Primary event broker
+
+channels:
+  gateway.events.v1:
+    address: gateway.events.v1
+    messages:
+      RequestLogged:
+        $ref: '#/components/messages/RequestLogged'
+      RateLimitExceeded:
+        $ref: '#/components/messages/RateLimitExceeded'
+
+operations:
+  logRequest:
+    action: send
+    channel:
+      $ref: '#/channels/gateway.events.v1'
+    messages:
+      - $ref: '#/channels/gateway.events.v1/messages/RequestLogged'
+  notifyRateLimit:
+    action: send
+    channel:
+      $ref: '#/channels/gateway.events.v1'
+    messages:
+      - $ref: '#/channels/gateway.events.v1/messages/RateLimitExceeded'
+
+components:
+  messages:
+    RequestLogged:
+      name: RequestLogged
+      title: Request Logged
+      summary: Emitted when a request has been processed by the gateway.
+      payload:
+        $ref: '#/components/schemas/RequestLogPayload'
+    RateLimitExceeded:
+      name: RateLimitExceeded
+      title: Rate Limit Exceeded
+      summary: Emitted when a client exceeds the defined rate limit.
+      payload:
+        $ref: '#/components/schemas/RateLimitPayload'
+
+  schemas:
+    RequestLogPayload:
+      type: object
+      required:
+        - trace_id
+        - method
+        - path
+        - status_code
+        - latency_ms
+      properties:
+        trace_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          nullable: true
+        method:
+          type: string
+          enum: [GET, POST, PUT, DELETE, PATCH]
+        path:
+          type: string
+        status_code:
+          type: integer
+        latency_ms:
+          type: integer
+        client_ip:
+          type: string
+          format: ipv4
+
+    RateLimitPayload:
+      type: object
+      required:
+        - client_ip
+        - limit
+      properties:
+        client_ip:
+          type: string
+          format: ipv4
+        limit:
+          type: integer
+        user_id:
+          type: string
+          nullable: true
+
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

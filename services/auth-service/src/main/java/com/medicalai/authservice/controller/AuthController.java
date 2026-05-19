@@ -34,6 +34,11 @@ public class AuthController implements AuthApi {
     }
 
     @Override
+    public ResponseEntity<Void> validateToken() {
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
     public ResponseEntity<AuthResponse> loginUser(LoginRequest loginRequest) {
         try {
             AuthResponse response = authService.login(loginRequest);

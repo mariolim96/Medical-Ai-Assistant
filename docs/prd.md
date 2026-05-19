@@ -342,7 +342,7 @@ merge → main
 ### Fase 1 — Fondamenta (Settimane 1-2)
 - [x] Infrastruttura locale: docker-compose con tutti i servizi
 - [x] auth-service: registrazione + JWT
-- [ ] 
+- [ ] api-gateway: routing base
 - [ ] Schema Kafka: topics e producer/consumer base
 
 ### Fase 2 — Core AI (Settimane 3-4)

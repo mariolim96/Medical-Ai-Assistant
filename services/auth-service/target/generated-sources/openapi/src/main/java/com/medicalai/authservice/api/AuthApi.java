@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-05-11T22:40:45.009990700+02:00[Europe/Rome]", comments = "Generator version: 7.4.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-05-19T21:34:11.321215300+02:00[Europe/Rome]", comments = "Generator version: 7.4.0")
 @Validated
 @Tag(name = "Auth", description = "Operazioni di autenticazione")
 public interface AuthApi {
@@ -101,6 +101,34 @@ public interface AuthApi {
     
     ResponseEntity<AuthResponse> registerUser(
         @Parameter(name = "RegisterRequest", description = "", required = true) @Valid @RequestBody RegisterRequest registerRequest
+    );
+
+
+    /**
+     * GET /auth/validate : Valida il token JWT
+     *
+     * @return Token valido (status code 200)
+     *         or Token non valido o mancante (status code 401)
+     */
+    @Operation(
+        operationId = "validateToken",
+        summary = "Valida il token JWT",
+        tags = { "Auth" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Token valido"),
+            @ApiResponse(responseCode = "401", description = "Token non valido o mancante")
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/auth/validate"
+    )
+    
+    ResponseEntity<Void> validateToken(
+        
     );
 
 }
